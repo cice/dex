@@ -18,7 +18,7 @@ module Dex
       
       dexes.each do |dex|
         dex_const = dex.constantize
-        mod_const.send :include, dex_const
+        mod_const.send :include, dex_const unless mod_const.included_modules.include?(dex_const)
       end
     end
     
