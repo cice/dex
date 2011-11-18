@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "dex"
   s.version     = Dex::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Marian Theisen"]
+  s.email       = ["marian.theisen@kayoom.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Decorator injection for Rails}
+  s.description = %q{Decorator injection for Rails}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
