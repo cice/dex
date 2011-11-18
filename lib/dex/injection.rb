@@ -2,6 +2,22 @@ require 'active_support'
 require 'active_support/dependencies'
 
 module Dex
+  class InjectableDep
+    attr_reader :mod, :dex, :method
+    
+    def initialize mod, dex, method
+      @mod, @dex, @method = mod, dex, method
+    end
+    
+    def perform_injection_on! mod_const
+      mod_const.send method, dex_const
+    end
+    
+    def dex_const
+      dex.constantize
+    end
+  end
+  
   module Injection
     attr_accessor :_dex_registered_dexes
     
@@ -17,15 +33,14 @@ module Dex
       return if dexes.nil?
       
       dexes.each do |dex|
-        dex_const = dex.constantize
-        mod_const.send :include, dex_const unless mod_const.included_modules.include?(dex_const)
+        dex.perform_injection_on! mod_const
       end
     end
     
-    def register_dex_for mod, dex
+    def register_dex_for mod, dex, method = :include
       @_dex_registered_dexes ||= {}
       dexes = @_dex_registered_dexes[mod] ||= []
-      dexes << dex
+      dexes << InjectableDep.new(mod, dex, method)
     end
   end
 end
