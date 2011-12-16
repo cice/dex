@@ -39,4 +39,16 @@ describe 'Dex' do
       Example1.new.should respond_to :example1_dexed_method
     end
   end
+  
+  describe 'include / extend confusion' do
+    class IncludeExtendTest
+      include ActiveSupport::Dependencies
+    end
+    
+    it 'should use same Hash, regardless if Dependencies included as module or not' do
+      test = IncludeExtendTest.new
+      
+      test._dex_registered_dexes.object_id.should be ActiveSupport::Dependencies._dex_registered_dexes.object_id
+    end
+  end
 end
