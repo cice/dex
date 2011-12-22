@@ -19,12 +19,12 @@ describe 'Dex' do
     end
     
     it 'should include registered dex' do
-      ActiveSupport::Dependencies.register_dex_for 'Example1', 'Example1::Dex'
+      RegisterDex 'Example1', 'Example1::Dex'
       Example1.new.should respond_to :example1_dexed_method
     end
     
     it 'should re-include registered dexes after reload' do
-      ActiveSupport::Dependencies.register_dex_for 'Example1', 'Example1::Dex'
+      RegisterDex 'Example1', 'Example1::Dex'
       Example1.new.should respond_to :example1_dexed_method
       
       ActiveSupport::Dependencies.clear
@@ -35,9 +35,13 @@ describe 'Dex' do
   
   describe '"require" mechanism' do
     it 'should include decorators on load of a constant' do
-      ActiveSupport::Dependencies.register_dex_for 'Example1', 'Example1::Dex'
+      RegisterDex 'Example1', 'Example1::Dex'
       Example1.new.should respond_to :example1_dexed_method
     end
+  end
+  
+  it 'should require decorators for nested autoloaded classes' do
+    
   end
   
   describe 'include / extend confusion' do
